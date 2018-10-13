@@ -20,6 +20,11 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'rking/ag.vim'
+Plug 'tpope/vim-surround'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdcommenter'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'vim-utils/vim-man'
 
 " colorscheme
 Plug 'fabi1cazenave/kalahari.vim'
@@ -27,14 +32,15 @@ Plug 'fabi1cazenave/kalahari.vim'
 
 " highlighting improvement
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
-Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
-Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
-Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'hdima/python-syntax', { 'for': 'python' }
 Plug 'cespare/vim-toml', { 'for': 'toml' }
+" Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
+" Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
+" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'luochen1990/rainbow'
 
-" work time
-" Plug 'wakatime/vim-wakatime'
+" Python
+Plug 'vim-scripts/indentpython.vim'
 
 " add plugin to runtimepath
 call plug#end()
@@ -109,11 +115,13 @@ set wildmode=list:longest        " shell-like completion (up to ambiguity point)
 set wildignore=*.o,*.out,*.obj,*.pyc,.git,.hgignore,.svn,.cvsignore,*/tmp/*,*.so,*.swp,*.zip
 let g:completor_clang_binary = '/usr/lib/clang'
 let g:completor_min_chars=3
+
+let g:completor_python_binary = '/usr/lib/python3'
 " }}}
 
 " visuals {{{1
 
-"set t_Co=256            " force vim to use 256 colors
+set t_Co=256            " force vim to use 256 colors
 set background=dark
 syntax on               " syntax highlighting
 let g:kalahari_termcolors=256
@@ -122,7 +130,9 @@ colorscheme kalahari
 "colorscheme molokai
 
 " look improvement
-"set fillchars=stl:─,stlnc:─,vert:│,fold:─,diff:─
+" set fillchars=stl:─,stlnc:─,vert:│,fold:─,diff:─
+set listchars=tab:»\ ,trail:·,extends:>,precedes:<,space:•
+set list
 
 " break long lines visually (not actual lines)
 set wrap linebreak
@@ -168,18 +178,26 @@ nnoremap Q @q
 map <space> <leader>
 
 nnoremap <silent> <Leader>/ :nohlsearch<CR>
+nnoremap <silent> <Leader>r :set relativenumber!<CR>
+nnoremap <silent> <Leader>g gg=G``
+
+" CtrlP
 nnoremap <silent> <Leader>o :CtrlP<CR>
 nnoremap <silent> <Leader>b :CtrlPBuffer<CR>
 nnoremap <silent> <Leader>f :CtrlPMRUFiles<CR>
-nnoremap <silent> <Leader>r :set relativenumber!<CR>
-nnoremap <silent> <Leader>g gg=G``
+
+" Man
+map <leader>k <Plug>(Man)
+map <leader>v <Plug>(Vman)
+
 "}}}
 
 " Plugins configurations
 
 " linter {{{
-let g:ale_c_gcc_options = '-Wall -Werror -Wextra -I./libft/includes -I./../libft/includes -I./includes -I./../includes -I./include -I./../include'
+let g:ale_c_gcc_options = '-Wall -Werror -Wextra -I./libft/include -I./../libft/include -I./include -I./../include -I./include -I./../include'
 let g:ale_cpp_gcc_options = '-Wall -Werror -Wextra -I./include -I./../include -std=c++11'
+let g:completor_python_binary = '/usr/lib/python2.7'
 " }}}
 
 " CtrlP {{{
@@ -205,4 +223,12 @@ let g:ag_working_path_mode="r"
 
 " rainbow {{{
 let g:rainbow_active = 1
+"}}}
+
+" nerdcommenter {{{
+let g:NERDSpaceDelims = 1
+let g:NERDCompactSexyComs = 1
+let g:NERDDefaultAlign = 'left'
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
 "}}}
