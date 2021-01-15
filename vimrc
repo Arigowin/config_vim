@@ -26,21 +26,24 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'vim-utils/vim-man'
 
+Plug 'yggdroot/indentline'
+Plug 'ap/vim-css-color'
+Plug 'mhinz/vim-signify', { 'branch': 'legacy' }
+
 " colorscheme
-Plug 'fabi1cazenave/kalahari.vim'
+"Plug 'fabi1cazenave/kalahari.vim'
 "Plug 'tomasr/molokai'
+Plug 'morhetz/gruvbox'
 
 " highlighting improvement
 Plug 'octol/vim-cpp-enhanced-highlight', { 'for': ['c', 'cpp'] }
 Plug 'hdima/python-syntax', { 'for': 'python' }
-Plug 'cespare/vim-toml', { 'for': 'toml' }
-" Plug 'jelera/vim-javascript-syntax', { 'for': 'javascript' }
-" Plug 'digitaltoad/vim-pug', { 'for': 'pug' }
-" Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'luochen1990/rainbow'
 
 " Python
 Plug 'vim-scripts/indentpython.vim'
+
+" Other
 
 " add plugin to runtimepath
 call plug#end()
@@ -102,6 +105,9 @@ autocmd BufWritePre *.py,*.js,*.hs,*.rs,*.html,*.css,*.scss,*.c,*.h,*.cpp,*.hpp 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
+" default updatetime 4000ms is not good for async update
+set updatetime=100
+
 " Searching configurations {{{
 set incsearch   " Incremental search. Best search feature ever
 set ignorecase
@@ -124,15 +130,18 @@ let g:completor_python_binary = '/usr/lib/python3'
 set t_Co=256            " force vim to use 256 colors
 set background=dark
 syntax on               " syntax highlighting
-let g:kalahari_termcolors=256
-colorscheme kalahari 
+"let g:kalahari_termcolors=256
+"colorscheme kalahari
 "let g:molokai_termcolors=256
 "colorscheme molokai
+let g:gruvbox_termcolors=256
+colorscheme gruvbox
+" let g:gruvbox_contrast_dark='hard'
 
 " look improvement
-" set fillchars=stl:─,stlnc:─,vert:│,fold:─,diff:─
-set listchars=tab:»\ ,trail:·,extends:>,precedes:<,space:•
-set list
+" set listchars=tab:�\ ,trail:·,extends:>,precedes:<,space.
+" set list
+set list lcs=tab:\|\.
 
 " break long lines visually (not actual lines)
 set wrap linebreak
@@ -144,6 +153,7 @@ set shortmess=atI                " short messages to avoid scrolling
 set title
 set ruler                        " show the cursor position all the time
 set showcmd                      " display incomplete commands
+let g:airline#extensions#tabline#enabled = 1
 " }}}2
 
 if exists('+colorcolumn')
@@ -195,9 +205,10 @@ map <leader>v <Plug>(Vman)
 " Plugins configurations
 
 " linter {{{
-let g:ale_c_gcc_options = '-Wall -Werror -Wextra -I./libft/include -I./../libft/include -I./include -I./../include -I./include -I./../include'
-let g:ale_cpp_gcc_options = '-Wall -Werror -Wextra -I./include -I./../include -std=c++11'
-let g:completor_python_binary = '/usr/lib/python2.7'
+let g:ale_c_gcc_options =		'-Wall -Werror -Wextra -I./libft/includes -I./../libft/includes -I./ft_printf/include -I./../ft_printf/include -I./glfw3/include -I./../glfw3/include -I./src/glad/include -I./../src/glad/include -I./include -I./../include -I. -I./..'
+let g:ale_c_clang_options =		'-Wall -Werror -Wextra -I./libft/includes -I./../libft/includes -I./ft_printf/include -I./../ft_printf/include -I./glfw3/include -I./../glfw3/include -I./src/glad/include -I./../src/glad/include -I./include -I./../include -I. -I./.. -std=c11 '
+let g:ale_cpp_gcc_options =		'-Wall -Werror -Wextra -std=c++11'
+let g:completor_python_binary =	'/usr/lib/python2.7'
 " }}}
 
 " CtrlP {{{
@@ -231,4 +242,12 @@ let g:NERDCompactSexyComs = 1
 let g:NERDDefaultAlign = 'left'
 let g:NERDCommentEmptyLines = 1
 let g:NERDTrimTrailingWhitespace = 1
+"}}}
+
+" indentline {{{
+let g:indentLine_enabled = 1
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 1
+let g:indentLine_setColors = 0
+let g:indentLine_char_list = ['|', '�', '�', '�']
 "}}}
